@@ -73,7 +73,12 @@ def _target_from_request(request: HttpRequest) -> tuple[str, str, dict[str, Any]
 
 def _stream_response(request, url, method, headers, body, *, image: bool = False):
     validate_proxy_url(url)
-    status, resp_headers, iterator = client.fetch_stream(url, method, headers=headers, content=body)
+    try:
+        status, resp_headers, iterator = client.fetch_stream(
+            url, method, headers=headers, content=body
+        )
+    except Exception as exc:
+        raise invalid_parameter("url", "no se pudo obtener el recurso") from exc
     content_type = resp_headers.get("Content-Type", "application/octet-stream")
     if image and not content_type.lower().startswith("image/"):
         # consume to close

@@ -92,6 +92,17 @@ def fetch_stream(url: str, method: str = "GET", *, headers=None, content=None):
                 content = None
             continue
 
+        # Pre-check Content-Length when available
+        content_length = response.headers.get("content-length")
+        if content_length is not None:
+            try:
+                if int(content_length) > max_bytes:
+                    response.close()
+                    client.close()
+                    raise ValueError("Respuesta supera el límite de tamaño")
+            except ValueError:
+                pass
+
         # Prepare headers (exclude hop-by-hop)
         out_headers = {}
         for key, value in response.headers.items():
