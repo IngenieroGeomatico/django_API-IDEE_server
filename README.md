@@ -3,25 +3,7 @@
 Reimplementación en Django del servidor de API-IDEE (`api-idee-rest`, `api-idee-proxy`),
 compatible con el cliente **API-IDEE 1.1.0** y con una API canónica OGC en `/api/v1/`.
 
-Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
-
-> **Alcance actual:** visualizadores por API y proxy. Las fases de bases de datos, correo,
-> estáticos y cutover quedan fuera de alcance.
-
 ---
-
-## Estado del proyecto
-
-| Fase | Contenido | Estado |
-|---|---|---|
-| **0. Preparación** | Esqueleto Django, CI, lint, tipos, tests, ADRs, corpus golden | ✅ Completada (2026-11-01) |
-| **1. Núcleo HTTP y normalización** | `Parametros`, CRS/bbox/datetime, Problem Details, `f`/`Accept`, CORS, cabeceras | ✅ Completada (2026-11-01) |
-| **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ✅ Completada (2026-11-01) |
-| **3. Visualizador y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ✅ Completada (2026-11-01) |
-| **4. Proxy** | GET/POST, imágenes, allowlist SSRF, streaming | ✅ Completada (2026-11-01) |
-| **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⛔ Fuera de alcance |
-| **6. Correo, legacy, estáticos y despliegue** | `/api/email`, JSP heredados, Docker/nginx, observabilidad | ⛔ Fuera de alcance |
-| **7. Cutover** | Golden master, canary, rollback | ⛔ Fuera de alcance |
 
 Tests: 318 passing. Puerta de calidad: `ruff check`, `ruff format --check`, `mypy`,
 `pytest` y `manage.py check` (dev/test/prod) en verde.
