@@ -48,6 +48,7 @@ PLUGIN_CLASSES: dict[str, str] = {
     "storymap": "StoryMap",
     "stylemanager": "StyleManager",
     "timeline": "Timeline",
+    "toc": "TOC",
     "vectorsmanagement": "VectorsManagement",
     "viewmanagement": "ViewManagement",
     "wfstcontrols": "WFSTControls",
@@ -191,6 +192,9 @@ def canonical_plugin(value: str) -> str:
 
 
 def plugin_class(name: str) -> str:
+    lookup = {key.casefold(): value for key, value in PLUGIN_CLASSES.items()}
+    if name.casefold() in lookup:
+        return lookup[name.casefold()]
     canonical = canonical_plugin(name)
     if canonical in PLUGIN_CLASSES:
         return PLUGIN_CLASSES[canonical]

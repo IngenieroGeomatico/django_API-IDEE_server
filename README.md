@@ -16,7 +16,7 @@ Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
 | **0. Preparación** | Esqueleto Django, CI, lint, tipos, tests, ADRs, corpus golden | ✅ Completada (2026-11-01) |
 | **1. Núcleo HTTP y normalización** | `Parametros`, CRS/bbox/datetime, Problem Details, `f`/`Accept`, CORS, cabeceras | ✅ Completada (2026-11-01) |
 | **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ✅ Completada (2026-11-01) |
-| **3. Visor y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ⏳ Pendiente |
+| **3. Visualizador y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ⏳ Pendiente |
 | **4. Proxy** | GET/POST, imágenes, allowlist SSRF, caché y rate limit | ⏳ Pendiente |
 | **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⏳ Pendiente |
 | **6. Correo, legacy, estáticos y despliegue** | `/api/email`, JSP heredados, Docker/nginx, observabilidad | ⏳ Pendiente |
@@ -224,7 +224,7 @@ Todas las variables se leen de `.env` o del entorno. Ver `.env.example`.
 | `LOG_FORMAT` | `console` | `console` o `json` |
 
 Límites de la API (`API_IDEE` en `config/settings/base.py`): URL ≤ 8 KB, ≤ 50 parámetros,
-valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visor, CQL2 ≤ 20 nodos.
+valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visualizador, CQL2 ≤ 20 nodos.
 
 ---
 
@@ -244,12 +244,12 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visor, 
 
 ## Fase 3 (completada)
 
-- Plantillas `viewer.html` (`index.jsp`) y `visualizador.html` (`visor.jsp`) sin JSP.
+- Plantillas `viewer.html` (`index.jsp`) y `visualizador.html` (`visualizador.jsp`) sin JSP.
 - Modelo de capas y parser del DSL `layers` (`apps/viewers/layers.py`).
 - Validación de controles y plugins contra el catálogo (`apps/viewers/validate.py`).
 - `POST /api/v1/viewers` y `GET /api/v1/viewers/{id}` (HTML o JSON según `f`).
 - Builder `GET/POST /api/js` con escapado seguro y `IDEE.map({...})`.
-- Compatibilidad con `index.jsp`, `visor.jsp`, `/visor` y `/visualizador`.
+- Compatibilidad con `index.jsp`, `visualizador.jsp`, `/visualizador` y `/visualizador`.
 
 ---
 
