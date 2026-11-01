@@ -251,6 +251,8 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visuali
 - Builder `GET/POST /api/js` con escapado seguro y `IDEE.map({...})`.
 - Compatibilidad con `index.jsp`, `visualizador.jsp`, `/visualizador` y `/visualizador`.
 
+> **Alcance actual:** visualizadores por API y proxy. Las fases de bases de datos, correo, estáticos y cutover quedan fuera de alcance.
+
 ## Fase 4 (completada)
 
 - Proxy legacy `/api/proxy` (JSON/JSONP) y `/api/proxy/image`.

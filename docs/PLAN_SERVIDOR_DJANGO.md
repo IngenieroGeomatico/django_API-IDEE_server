@@ -20,11 +20,11 @@
 | 0. Preparación | ✅ Completada (T-00.1 parcial) | 2026-11-01 | `config/`, `tests/golden/urls.yaml`, `docs/adr/`, CI |
 | 1. Núcleo HTTP y normalización | ✅ Completada | 2026-11-01 | `apps/core/`, 150 tests, `/api/v1/`, Problem Details |
 | 2. Acciones y recursos | ✅ Completada | 2026-11-01 | `apps/actions/`, `apps/catalog/`, 257 tests, `/api/actions/*` y `/api/v1/actions/*` |
-| 3. Visor y builder | ⏳ Pendiente | — | — |
-| 4. Proxy | ⏳ Pendiente | — | — |
-| 5. Base de datos | ⏳ Pendiente | — | — |
-| 6. Correo, legacy, estáticos y despliegue | ⏳ Pendiente | — | — |
-| 7. Cutover | ⏳ Pendiente | — | — |
+| 3. Visor y builder | ✅ Completada | 2026-11-01 | `apps/viewers/`, 318 tests, `/visualizador`, `/api/js`, `/api/v1/viewers` |
+| 4. Proxy | ✅ Completada | 2026-11-01 | `apps/proxy/`, 318 tests, `/api/proxy`, `/api/v1/proxy` |
+| 5. Base de datos | ⛔ Fuera de alcance | — | No requerido para visualizadores/proxy |
+| 6. Correo, legacy, estáticos y despliegue | ⛔ Fuera de alcance | — | No requerido para visualizadores/proxy |
+| 7. Cutover | ⛔ Fuera de alcance | — | — |
 
 **Desviaciones aprobadas respecto a este plan**
 
