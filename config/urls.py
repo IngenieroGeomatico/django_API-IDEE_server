@@ -8,6 +8,7 @@ from django.urls import path
 from apps.actions import views as actions_views
 from apps.core import views as core_views
 from apps.core.problems import InternalError, NotFound, problem_response
+from apps.proxy import views as proxy_views
 from apps.viewers import views as viewers_views
 from config.api import api
 
@@ -61,6 +62,13 @@ urlpatterns = [
     path("visor.jsp", viewers_views.visualizador, name="legacy-visor-jsp"),
     path("api/js", viewers_views.api_js, name="legacy-api-js"),
     path("api/js/", viewers_views.api_js),
+    # Proxy heredado y canónico (fachada legacy).
+    path("api/proxy", proxy_views.proxy_legacy, name="legacy-proxy"),
+    path("api/proxy/", proxy_views.proxy_legacy),
+    path("api/proxy/image", proxy_views.proxy_image, name="legacy-proxy-image"),
+    path("api/proxy/image/", proxy_views.proxy_image),
+    path("proxyPost", proxy_views.proxy_post, name="legacy-proxy-post"),
+    path("proxyPost/", proxy_views.proxy_post),
 ]
 
 

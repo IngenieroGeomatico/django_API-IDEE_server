@@ -1139,6 +1139,8 @@ Las tareas usan IDs `T-xx`. La estimación es en jornadas de una persona. Las de
 | T-18 | Proxy GET canónico con streaming | `apps/proxy/views.py` | Sin cargar en memoria | 2 |
 | T-19 | Proxy de imagen | Vista + límites | Máx. 1 MB / configurable | 1 |
 | T-20 | Proxy POST (`/proxyPost`) | Vista + cuerpo | WFS-T de prueba OK | 2 |
+
+> **Estado:** Fase 4 implementada (proxy legacy/canónico, streaming, allowlist y validación SSRF).
 | T-21 | SSRF guard + timeouts + tamaño | `apps/proxy/validators.py` | Tests de IP privada/metadata | 3 |
 | T-22 | Caché y rate limit | Redis | `429` + `Retry-After` | 1 |
 | T-23 | Tests de seguridad del proxy | `tests/security/proxy/` | 0 hallazgos críticos | 1 |

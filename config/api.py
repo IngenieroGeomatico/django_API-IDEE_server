@@ -19,6 +19,7 @@ from apps.core.problems import (
     UnprocessableEntity,
     problem_response,
 )
+from apps.proxy.api import router as proxy_router
 from apps.viewers.api import router as viewers_router
 
 logger = logging.getLogger("apps.api")
@@ -38,6 +39,7 @@ api = NinjaAPI(
 api.add_router("", core_router)
 api.add_router("", actions_router)
 api.add_router("", viewers_router)
+api.add_router("", proxy_router)
 
 
 @api.exception_handler(ProblemError)

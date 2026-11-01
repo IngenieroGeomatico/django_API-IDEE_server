@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.actions",
     "apps.viewers",
+    "apps.proxy",
 ]
 
 MIDDLEWARE = [
