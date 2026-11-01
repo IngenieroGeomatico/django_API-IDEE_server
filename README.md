@@ -1,11 +1,12 @@
 # Servidor Django de API-IDEE
 
-Reimplementación en Django del servidor de API-IDEE (`api-idee-rest`, `api-idee-proxy`,
-`api-idee-database`), compatible con el cliente **API-IDEE 1.1.0** y con una API canónica
-OGC en `/api/v1/`.
+Reimplementación en Django del servidor de API-IDEE (`api-idee-rest`, `api-idee-proxy`),
+compatible con el cliente **API-IDEE 1.1.0** y con una API canónica OGC en `/api/v1/`.
 
-El plan de trabajo completo está en [`docs/PLAN_SERVIDOR_DJANGO.md`](docs/PLAN_SERVIDOR_DJANGO.md).
 Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
+
+> **Alcance actual:** visualizadores por API y proxy. Las fases de bases de datos, correo,
+> estáticos y cutover quedan fuera de alcance.
 
 ---
 
@@ -16,35 +17,14 @@ Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
 | **0. Preparación** | Esqueleto Django, CI, lint, tipos, tests, ADRs, corpus golden | ✅ Completada (2026-11-01) |
 | **1. Núcleo HTTP y normalización** | `Parametros`, CRS/bbox/datetime, Problem Details, `f`/`Accept`, CORS, cabeceras | ✅ Completada (2026-11-01) |
 | **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ✅ Completada (2026-11-01) |
-| **3. Visualizador y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ⏳ Pendiente |
-| **4. Proxy** | GET/POST, imágenes, allowlist SSRF, caché y rate limit | ⏳ Pendiente |
-| **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⏳ Pendiente |
-| **6. Correo, legacy, estáticos y despliegue** | `/api/email`, JSP heredados, Docker/nginx, observabilidad | ⏳ Pendiente |
-| **7. Cutover** | Golden master, canary, rollback | ⏳ Pendiente |
+| **3. Visualizador y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ✅ Completada (2026-11-01) |
+| **4. Proxy** | GET/POST, imágenes, allowlist SSRF, streaming | ✅ Completada (2026-11-01) |
+| **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⛔ Fuera de alcance |
+| **6. Correo, legacy, estáticos y despliegue** | `/api/email`, JSP heredados, Docker/nginx, observabilidad | ⛔ Fuera de alcance |
+| **7. Cutover** | Golden master, canary, rollback | ⛔ Fuera de alcance |
 
-Detalle de la fase 0:
-
-- [x] T-00.1 Corpus de URLs: **semilla de 48 URLs** en `tests/golden/urls.yaml` y script
-      de captura `scripts/capture_golden.py`. Falta ejecutar la captura contra el servidor
-      actual para marcarla como completa.
-- [x] T-00.2 ADRs 0001–0007.
-- [x] T-00.3 Esqueleto Django, `pytest`, `ruff`, `mypy` y CI de GitHub Actions.
-
-Detalle de la fase 1:
-
-- [x] T-01 `Parametros`: case-insensitive, coincidencia exacta, alias, duplicados y límites.
-- [x] T-02 Validadores de CRS, bbox, datetime, booleanos, enums, listas y colores.
-- [x] T-03 Problem Details (RFC 9457) y middleware de errores.
-- [x] T-04 Negociación `f`/`Accept`, ETag/304, `Vary` y `Content-Crs`.
-- [x] T-05 CORS por allowlist, CSP con nonce, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
-- [x] T-06 Tests unitarios y de integración del núcleo (150 tests).
-
-Detalle de la fase 2:
-
-- [x] T-07 Fachada heredada `/api/actions/*` en JSON/JSONP validado, con `Deprecation` y `Sunset`.
-- [x] T-08 Catálogo real de controles, servicios, versiones, proyección, plugins y recursos en `apps/catalog/data/`.
-- [x] T-09 `resources/svg`, `resources/geodata` y `resourcesPlugins` con ETag/304, forma anidada heredada y forma plana canónica.
-- [x] T-10 Tests unitarios y de contrato OpenAPI (257 tests en total).
+Tests: 318 passing. Puerta de calidad: `ruff check`, `ruff format --check`, `mypy`,
+`pytest` y `manage.py check` (dev/test/prod) en verde.
 
 ---
 
@@ -99,16 +79,34 @@ python scripts/capture_golden.py --base-url https://componentes.idee.es/api-idee
 
 ---
 
-## Endpoints disponibles (fases 1 y 2)
+## Endpoints disponibles
+
+### Salud
 
 | Método | Ruta | Descripción |
 |---|---|---|
 | GET | `/healthz` | Liveness; no toca dependencias |
 | GET | `/readyz` | Readiness; comprueba la base de datos |
+
+### API canónica OGC (`/api/v1`)
+
+| Método | Ruta | Descripción |
+|---|---|---|
 | GET | `/api/v1/` | Landing OGC con enlaces |
 | GET | `/api/v1/conformance` | Clases de conformidad OGC |
 | GET | `/api/v1/openapi.json` | Contrato OpenAPI 3.1 |
 | GET | `/api/v1/docs` | Documentación interactiva |
+| GET/POST | `/api/v1/proxy` | Proxy canónico con streaming |
+| POST | `/api/v1/viewers` | Crea un visualizador (`201` + `Location`) |
+| GET | `/api/v1/viewers/{id}` | Recupera un visualizador (JSON o HTML según `f`) |
+| GET | `/api/v1/actions/*` | Acciones y recursos canónicos |
+| GET | `/api/v1/resources/svg` | Colecciones SVG (forma plana) |
+| GET | `/api/v1/resources/geodata` | Colecciones de geodatos (forma plana) |
+
+### Fachada heredada (`/api`)
+
+| Método | Ruta | Descripción |
+|---|---|---|
 | GET | `/api/actions` | Índice heredado de acciones |
 | GET | `/api/actions/controls` | Controles disponibles |
 | GET | `/api/actions/services` | Tipos de capa disponibles |
@@ -121,9 +119,21 @@ python scripts/capture_golden.py --base-url https://componentes.idee.es/api-idee
 | GET | `/api/actions/resourcesPlugins` | Catálogo o fichero JS/CSS de un plugin |
 | GET | `/api/actions/resources/svg` | Colecciones SVG |
 | GET | `/api/actions/resources/geodata` | Colecciones de geodatos |
-| GET | `/api/v1/actions/*` | Equivalentes canónicos, solo JSON |
-| GET | `/api/v1/resources/svg` | Colecciones SVG (forma plana) |
-| GET | `/api/v1/resources/geodata` | Colecciones de geodatos (forma plana) |
+| GET/POST | `/api/js` | Builder legacy (`IDEE.map({...})`, JSONP opcional) |
+| GET | `/api/proxy` | Proxy legacy (JSON o JSONP) |
+| GET | `/api/proxy/image` | Streaming de imagen |
+| POST | `/proxyPost` | Proxy POST legacy |
+
+### Visualizadores (plantillas)
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/` | Builder legacy (`viewer.html`, contenedor `#map`) |
+| GET | `/index.jsp` | Alias legacy del builder |
+| GET | `/visualizador` | Visualizador de ejemplo (`visualizador.html`, contenedor `#mapjs`) |
+| GET | `/visualizador/` | Alias con barra final |
+| GET | `/visor` | Alias legacy |
+| GET | `/visor.jsp` | Alias legacy |
 
 La fachada `/api/actions/*` reproduce el comportamiento del servidor Java: declara
 `application/javascript` aunque no haya `callback`, tolera parámetros desconocidos y
@@ -166,33 +176,48 @@ GET /no-existe                -> 404 problem+json
 │   │   ├── loaders.py        # catálogo versionado y marcadores
 │   │   ├── external.py       # plugins externos (TTL + allowlist)
 │   │   └── data/             # JSON reales de API-IDEE 1.1.0
-│   └── core/
-│       ├── params.py         # Parametros: lectura única y tipada
-│       ├── validators.py     # int, bool, enum, listas, color, callback
-│       ├── crs.py            # EPSG/URN/URI/CRS84 + orden de ejes
-│       ├── bbox.py           # bbox 4/6, dominio y reproyección
-│       ├── temporal.py       # RFC 3339 e intervalos
-│       ├── problems.py       # Problem Details + middleware
-│       ├── http.py           # f/Accept, ETag, JSONP, Link
-│       ├── pagination.py     # limit/offset/numberMatched/links
-│       ├── middleware.py     # request-id, límites, cabeceras
-│       ├── logging.py        # logs JSON
-│       ├── views.py          # healthz/readyz
-│       └── api.py            # landing y conformance
+│   ├── core/
+│   │   ├── params.py         # Parametros: lectura única y tipada
+│   │   ├── validators.py     # int, bool, enum, listas, color, callback
+│   │   ├── crs.py            # EPSG/URN/URI/CRS84 + orden de ejes
+│   │   ├── bbox.py           # bbox 4/6, dominio y reproyección
+│   │   ├── temporal.py       # RFC 3339 e intervalos
+│   │   ├── problems.py       # Problem Details + middleware
+│   │   ├── http.py           # f/Accept, ETag, JSONP, Link
+│   │   ├── pagination.py     # limit/offset/numberMatched/links
+│   │   ├── middleware.py     # request-id, límites, cabeceras
+│   │   ├── logging.py        # logs JSON
+│   │   ├── views.py          # healthz/readyz
+│   │   └── api.py            # landing y conformance
+│   ├── proxy/
+│   │   ├── validators.py     # allowlist y protección SSRF
+│   │   ├── client.py         # httpx streaming + redirecciones
+│   │   └── views.py          # legacy, imagen y canónico
+│   └── viewers/
+│       ├── layers.py          # modelo de capas y parser DSL
+│       ├── validate.py        # controles y plugins
+│       ├── builder.py         # generación JS legacy y canónica
+│       ├── render.py          # plantillas y payload por defecto
+│       ├── views.py           # /, /visualizador, /api/js
+│       ├── api.py             # /api/v1/viewers
+│       └── models.py          # almacenamiento de visualizadores
+├── templates/
+│   ├── viewer.html            # contenedor #map
+│   └── visualizador.html      # contenedor #mapjs
 ├── tests/
-│   ├── unit/core/            # núcleo HTTP
-│   ├── unit/catalog/         # catálogo y plugins externos
-│   ├── unit/actions/         # servicio y fachada/canónica
-│   ├── contract/actions/     # contrato OpenAPI
-│   └── golden/               # corpus de URLs y capturas
+│   ├── unit/core/             # núcleo HTTP
+│   ├── unit/catalog/          # catálogo y plugins externos
+│   ├── unit/actions/          # servicio y fachada/canónica
+│   ├── unit/viewers/          # capas, validación, builder, vistas
+│   ├── unit/proxy/            # validadores y vistas del proxy
+│   ├── contract/              # contrato OpenAPI
+│   └── golden/                # corpus de URLs y capturas
 ├── docs/
-│   ├── PLAN_SERVIDOR_DJANGO.md
 │   └── adr/
 └── scripts/capture_golden.py
 ```
 
-Las apps `viewers`, `proxy`, `databases`, `mailer` y `legacy` se crearán en sus fases
-correspondientes.
+Las apps `databases`, `mailer` y `legacy` quedan fuera del alcance actual.
 
 ---
 
@@ -224,7 +249,7 @@ Todas las variables se leen de `.env` o del entorno. Ver `.env.example`.
 | `LOG_FORMAT` | `console` | `console` o `json` |
 
 Límites de la API (`API_IDEE` en `config/settings/base.py`): URL ≤ 8 KB, ≤ 50 parámetros,
-valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visualizador, CQL2 ≤ 20 nodos.
+valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visualizador.
 
 ---
 
@@ -234,31 +259,10 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visuali
    canónico.
 2. **Una sola lectura de `request.GET`** por petición: siempre a través de `Parametros`.
 3. **Todo error es Problem Details** salvo JSONP heredado.
-4. **Nada de SQL concatenado**: CQL2 + consultas parametrizadas (fase 5).
-5. **JSONP solo en legacy**, con `callback` validado, `nosniff`, `no-store`, `Deprecation`
+4. **JSONP solo en legacy**, con `callback` validado, `nosniff`, `no-store`, `Deprecation`
    y `Sunset`.
-6. **Todo destino externo pasa por allowlist** y límites de tiempo/tamaño.
-7. **Los parámetros obsoletos se anuncian** con `Deprecation: true` y `Warning`.
-
----
-
-## Fase 3 (completada)
-
-- Plantillas `viewer.html` (`index.jsp`) y `visualizador.html` (`visualizador.jsp`) sin JSP.
-- Modelo de capas y parser del DSL `layers` (`apps/viewers/layers.py`).
-- Validación de controles y plugins contra el catálogo (`apps/viewers/validate.py`).
-- `POST /api/v1/viewers` y `GET /api/v1/viewers/{id}` (HTML o JSON según `f`).
-- Builder `GET/POST /api/js` con escapado seguro y `IDEE.map({...})`.
-- Compatibilidad con `index.jsp`, `visualizador.jsp`, `/visualizador` y `/visualizador`.
-
-> **Alcance actual:** visualizadores por API y proxy. Las fases de bases de datos, correo, estáticos y cutover quedan fuera de alcance.
-
-## Fase 4 (completada)
-
-- Proxy legacy `/api/proxy` (JSON/JSONP) y `/api/proxy/image`.
-- Proxy canónico `/api/v1/proxy` GET/POST con streaming.
-- `/proxyPost` legacy.
-- Validación de URL, allowlist de hosts/puertos y protección SSRF.
+5. **Todo destino externo pasa por allowlist** y límites de tiempo/tamaño.
+6. **Los parámetros obsoletos se anuncian** con `Deprecation: true` y `Warning`.
 
 ---
 
