@@ -3,7 +3,25 @@
 Reimplementación en Django del servidor de API-IDEE (`api-idee-rest`, `api-idee-proxy`),
 compatible con el cliente **API-IDEE 1.1.0** y con una API canónica OGC en `/api/v1/`.
 
+Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
+
+> **Alcance actual:** visualizadores por API y proxy. Las fases de bases de datos, correo,
+> estáticos y cutover quedan fuera de alcance.
+
 ---
+
+## Estado del proyecto
+
+| Fase | Contenido | Estado |
+|---|---|---|
+| **0. Preparación** | Esqueleto Django, CI, lint, tipos, tests, ADRs, corpus golden | ✅ Completada (2026-11-01) |
+| **1. Núcleo HTTP y normalización** | `Parametros`, CRS/bbox/datetime, Problem Details, `f`/`Accept`, CORS, cabeceras | ✅ Completada (2026-11-01) |
+| **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ✅ Completada (2026-11-01) |
+| **3. Visualizador y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ✅ Completada (2026-11-01) |
+| **4. Proxy** | GET/POST, imágenes, allowlist SSRF, streaming | ✅ Completada (2026-11-01) |
+| **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⛔ Fuera de alcance |
+| **6. Correo, legacy, estáticos y despliegue** | `/api/email`, JSP heredados, Docker/nginx, observabilidad | ⛔ Fuera de alcance |
+| **7. Cutover** | Golden master, canary, rollback | ⛔ Fuera de alcance |
 
 Tests: 318 passing. Puerta de calidad: `ruff check`, `ruff format --check`, `mypy`,
 `pytest` y `manage.py check` (dev/test/prod) en verde.
@@ -245,6 +263,112 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visuali
    y `Sunset`.
 5. **Todo destino externo pasa por allowlist** y límites de tiempo/tamaño.
 6. **Los parámetros obsoletos se anuncian** con `Deprecation: true` y `Warning`.
+
+---
+
+## Ejemplos de uso
+
+Todos los ejemplos asumen el servidor en `http://localhost:8000`. Las respuestas de error
+son `application/problem+json` (RFC 9457).
+
+### Salud
+
+```powershell
+Invoke-RestMethod http://localhost:8000/healthz
+# { "status": "ok" }
+Invoke-RestMethod http://localhost:8000/readyz
+# { "status": "ready" }
+```
+
+### Crear un visualizador (JSON)
+
+```powershell
+$body = @{
+  container = "map"
+  view = @{ crs = "EPSG:4326"; center = @(-3.7, 40.4); zoom = 5 }
+  layers = @(@{ type = "WMS"; id = "u"; url = "https://example.com/wms"; layers = "L" })
+  controls = @("scale")
+  plugins = @(@{ type = "mousesrs" })
+} | ConvertTo-Json -Depth 5
+
+Invoke-RestMethod -Method Post -Uri http://localhost:8000/api/v1/viewers `
+  -ContentType "application/json" -Body $body
+```
+
+Respuesta (`201 Created`, cabecera `Location: /api/v1/viewers/{id}`):
+
+```json
+{
+  "id": "a711d652-faea-4165-add6-e1d735bf26ee",
+  "createdAt": "2026-11-01T15:19:28.673504+00:00",
+  "links": [
+    { "href": "/api/v1/viewers/a711...", "rel": "self", "type": "application/json" },
+    { "href": "/api/v1/viewers/a711...", "rel": "alternate", "type": "text/html" }
+  ],
+  "container": "map",
+  "view": { "crs": "EPSG:4326", "center": [-3.7, 40.4], "zoom": 5 },
+  "layers": [{ "type": "WMS", "id": "u", "url": "https://example.com/wms", "layers": "L" }],
+  "controls": [{ "type": "scale", "args": [], "options": {} }],
+  "plugins": [{ "type": "mousesrs", "args": [], "params": {} }]
+}
+```
+
+### Recuperar un visualizador en HTML
+
+```powershell
+Invoke-WebRequest "http://localhost:8000/api/v1/viewers/{id}?f=html"
+# 200 OK, text/html, contiene <div id="mapjs"> y <script id="viewer-config">
+```
+
+### Builder legacy (GET)
+
+```powershell
+Invoke-WebRequest "http://localhost:8000/api/js?layers=QUICK*c&callback=cb"
+# 200 OK, application/javascript
+# cb(IDEE.map({"container":"map","layers":["QUICK*c"]}));
+```
+
+### Builder legacy (POST)
+
+```powershell
+Invoke-WebRequest -Method Post -Uri http://localhost:8000/api/js `
+  -ContentType "application/json" -Body '{"layers":["QUICK*c"]}'
+# IDEE.map({"container":"map","layers":["QUICK*c"]})
+```
+
+### Proxy canónico (GET, streaming)
+
+```powershell
+$r = Invoke-WebRequest "http://localhost:8000/api/v1/proxy?url=https://www.ign.es/x"
+$r.StatusCode            # 200
+$r.Headers["X-Upstream-Status"]  # 200
+$r.Content               # cuerpo remoto tal cual
+```
+
+### Proxy de imagen
+
+```powershell
+Invoke-WebRequest "http://localhost:8000/api/proxy/image?url=https://www.ign.es/img.png"
+# 200 OK, Content-Type: image/png, cuerpo binario
+```
+
+### Acciones y recursos
+
+```powershell
+Invoke-RestMethod http://localhost:8000/api/v1/actions/controls
+# [ "scale", "scaleline", "panzoombar", ... ]
+
+Invoke-RestMethod "http://localhost:8000/api/v1/resources/svg?name=circleIcons"
+# { "collections": [ { "name": "circleIcons", "resources": [ ... ] } ] }
+```
+
+### Error Problem Details
+
+```powershell
+Invoke-WebRequest "http://localhost:8000/api/v1/?f=xml"
+# 400 application/problem+json
+# { "type": ".../invalid-parameter", "title": "Parámetro no válido", "status": 400, ... }
+```
 
 ---
 
