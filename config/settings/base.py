@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "ninja",
     "apps.core",
+    "apps.catalog",
+    "apps.actions",
 ]
 
 MIDDLEWARE = [
@@ -179,6 +181,29 @@ API_IDEE = {
     "JSONP_SUNSET": env("JSONP_SUNSET", default="Wed, 30 Jun 2027 00:00:00 GMT"),
     # Deprecación de rutas heredadas
     "LEGACY_SUNSET": env("LEGACY_SUNSET", default="Wed, 30 Jun 2027 00:00:00 GMT"),
+    # Catálogo estático de recursos (SVG y geodatos)
+    "STATIC_RESOURCES_URL": env(
+        "API_IDEE_STATIC_RESOURCES_URL",
+        default="https://componentes.idee.es/estaticos",
+    ),
+    # Plugins externos. Vacío = solo el snapshot local, sin tráfico de red.
+    "EXTERNAL_PLUGINS_BASE_URL": env("API_IDEE_EXTERNAL_PLUGINS_BASE_URL", default=""),
+    "EXTERNAL_PLUGINS_TTL": env.float("API_IDEE_EXTERNAL_PLUGINS_TTL", default=300.0),
+    "EXTERNAL_PLUGINS_TIMEOUT": env.float("API_IDEE_EXTERNAL_PLUGINS_TIMEOUT", default=5.0),
+    "EXTERNAL_PLUGINS_MAX_BYTES": env.int(
+        "API_IDEE_EXTERNAL_PLUGINS_MAX_BYTES", default=2 * 1024 * 1024
+    ),
+    "EXTERNAL_PLUGINS_ALLOWED_HOSTS": env.list(
+        "API_IDEE_EXTERNAL_PLUGINS_ALLOWED_HOSTS",
+        default=["*.idee.es", "*.ign.es", "*.cnig.es"],
+    ),
+    # Ficheros JS/CSS de los plugins
+    "PLUGIN_ASSET_TIMEOUT": env.float("API_IDEE_PLUGIN_ASSET_TIMEOUT", default=5.0),
+    "PLUGIN_ASSET_MAX_BYTES": env.int("API_IDEE_PLUGIN_ASSET_MAX_BYTES", default=2 * 1024 * 1024),
+    # Política de caché (segundos)
+    "CATALOG_MAX_AGE": env.int("API_IDEE_CATALOG_MAX_AGE", default=300),
+    "RESOURCE_MAX_AGE": env.int("API_IDEE_RESOURCE_MAX_AGE", default=86400),
+    "PLUGIN_ASSET_MAX_AGE": env.int("API_IDEE_PLUGIN_ASSET_MAX_AGE", default=3600),
 }
 
 # ---------------------------------------------------------------------------

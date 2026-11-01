@@ -19,7 +19,7 @@
 |---|---|---|---|
 | 0. Preparación | ✅ Completada (T-00.1 parcial) | 2026-11-01 | `config/`, `tests/golden/urls.yaml`, `docs/adr/`, CI |
 | 1. Núcleo HTTP y normalización | ✅ Completada | 2026-11-01 | `apps/core/`, 150 tests, `/api/v1/`, Problem Details |
-| 2. Acciones y recursos | ⏳ Pendiente | — | — |
+| 2. Acciones y recursos | ✅ Completada | 2026-11-01 | `apps/actions/`, `apps/catalog/`, 257 tests, `/api/actions/*` y `/api/v1/actions/*` |
 | 3. Visor y builder | ⏳ Pendiente | — | — |
 | 4. Proxy | ⏳ Pendiente | — | — |
 | 5. Base de datos | ⏳ Pendiente | — | — |
@@ -48,6 +48,15 @@
 - Negociación `f`/`Accept` con 406, ETag/304, `Vary`, `Content-Crs`, JSONP validado y `Link`.
 - Paginación OGC (`limit`/`offset`/`numberMatched`/`links`).
 - CORS por allowlist, CSP con nonce, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `X-Request-Id` y logs estructurados.
+
+**Entregado en la fase 2**
+
+- `apps/catalog/`: catálogo real de controles, servicios, versiones, proyección, plugins internos y recursos SVG/geodatos, con resolución de `${api-idee.url}` y `${api-idee.static_resources.url}`.
+- `apps/catalog/external.py`: lista de plugins externos con TTL, allowlist de hosts, límite de tamaño y respaldo al snapshot local.
+- `apps/actions/`: fachada heredada `/api/actions/*` con JSON/JSONP validado, `Deprecation`/`Sunset`, ETag/304 y la forma anidada histórica de `resources/*`.
+- API canónica `/api/v1/actions/*` y `/api/v1/resources/*`: solo JSON, parámetros estrictos, 406 y documentación OpenAPI con los alias del cliente (`number-ol`, `api-idee`).
+- Ficheros JS/CSS de plugins servidos desde estáticos locales o, si no, mediante descarga con allowlist, timeout y tamaño máximo.
+- Corrección del middleware de Problem Details para capturar también las excepciones de las vistas (`process_exception`).
 
 ---
 
@@ -1100,7 +1109,7 @@ Las tareas usan IDs `T-xx`. La estimación es en jornadas de una persona. Las de
 | T-05 | CORS y cabeceras de seguridad | Settings + middleware | Orígenes permitidos y `nosniff` | 1 |
 | T-06 | Tests unitarios del núcleo | `tests/unit/core/` | Verde en CI | 1 |
 
-#### Fase 2 — Acciones y recursos (5 d)
+#### Fase 2 — Acciones y recursos (5 d) ✅ Completada (2026-11-01)
 
 | ID | Tarea | Entregable | Criterio de aceptación | D |
 |---|---|---|---|---|

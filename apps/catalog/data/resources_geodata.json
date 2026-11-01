@@ -1,0 +1,170 @@
+{
+  "collections": [
+    {
+      "name": "KML",
+      "resources": [
+        {
+          "file": "CarrilbiciSevillaactualizado.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/CarrilbiciSevillaactualizado.kml"
+        },
+        {
+          "file": "arbda_sing_se.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/arbda_sing_se.kml"
+        },
+        {
+          "file": "las_huertas.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/las_huertas.kml"
+        },
+        {
+          "file": "las_huertas_n1.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/las_huertas_n1.kml"
+        },
+        {
+          "file": "monumentos_utf.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/monumentos_utf.kml"
+        },
+        {
+          "file": "museos_utf.kml",
+          "url": "${api-idee.static_resources.url}/Datos/KML/museos_utf.kml"
+        }
+      ]
+    },
+    {
+      "name": "WMC",
+      "resources": [
+        {
+          "file": "callejero2011cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/callejero2011cache.xml"
+        },
+        {
+          "file": "cdau.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/cdau.xml"
+        },
+        {
+          "file": "cdau_https.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/cdau_https.xml"
+        },
+        {
+          "file": "contextCallejero.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextCallejero.xml"
+        },
+        {
+          "file": "contextCallejeroCache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextCallejeroCache.xml"
+        },
+        {
+          "file": "contextCallejeroCacheLite.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextCallejeroCacheLite.xml"
+        },
+        {
+          "file": "contextOrtofoto.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextOrtofoto.xml"
+        },
+        {
+          "file": "contextOrtofotoCacheada.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextOrtofotoCacheada.xml"
+        },
+        {
+          "file": "contextOrtofotoCacheadaMunicipiosLite.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/contextOrtofotoCacheadaMunicipiosLite.xml"
+        },
+        {
+          "file": "context_cdau_callejero.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_callejero.xml"
+        },
+        {
+          "file": "context_cdau_callejero_25830_no_cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_callejero_25830_no_cache.xml"
+        },
+        {
+          "file": "context_cdau_hibrido.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_hibrido.xml"
+        },
+        {
+          "file": "context_cdau_hibrido_25830_no_cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_hibrido_25830_no_cache.xml"
+        },
+        {
+          "file": "context_cdau_hibrido_versions.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_hibrido_versions.xml"
+        },
+        {
+          "file": "context_cdau_satelite.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_satelite.xml"
+        },
+        {
+          "file": "context_cdau_satelite_25830_no_cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/context_cdau_satelite_25830_no_cache.xml"
+        },
+        {
+          "file": "hibrido.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/hibrido.xml"
+        },
+        {
+          "file": "hibrido2011cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/hibrido2011cache.xml"
+        },
+        {
+          "file": "mapa.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/mapa.xml"
+        },
+        {
+          "file": "ortofoto2011cache.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/ortofoto2011cache.xml"
+        },
+        {
+          "file": "satelite.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/satelite.xml"
+        },
+        {
+          "file": "wmc_grupos.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/wmc_grupos.xml"
+        },
+        {
+          "file": "wmc_grupos_capas.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/wmc_grupos_capas.xml"
+        },
+        {
+          "file": "wmc_grupos_capas2.xml",
+          "url": "${api-idee.static_resources.url}/Datos/WMC/wmc_grupos_capas2.xml"
+        }
+      ]
+    },
+    {
+      "name": "geojson",
+      "resources": [
+        {
+          "file": "vertices.geojson",
+          "url": "${api-idee.static_resources.url}/Datos/geojson/vertices.geojson"
+        }
+      ]
+    },
+    {
+      "name": "mbtiles",
+      "resources": [
+        {
+          "file": "cabrera.mbtiles",
+          "url": "${api-idee.static_resources.url}/Datos/mbtiles/cabrera.mbtiles"
+        },
+        {
+          "file": "countries.mbtiles",
+          "url": "${api-idee.static_resources.url}/Datos/mbtiles/countries.mbtiles"
+        }
+      ]
+    },
+    {
+      "name": "geopackage",
+      "resources": [
+        {
+          "file": "IGRPO_v2023_39_ETRS89_20250204.gpkg",
+          "url": "${api-idee.static_resources.url}/Datos/gpkg/IGRPO_v2023_39_ETRS89_20250204.gpkg"
+        },
+        {
+          "file": "rivers.gpkg",
+          "url": "${api-idee.static_resources.url}/Datos/gpkg/rivers.gpkg"
+        }
+      ]
+    }
+
+  ]
+}

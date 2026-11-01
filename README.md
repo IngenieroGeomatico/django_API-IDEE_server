@@ -15,7 +15,7 @@ Las decisiones de arquitectura están en [`docs/adr/`](docs/adr/).
 |---|---|---|
 | **0. Preparación** | Esqueleto Django, CI, lint, tipos, tests, ADRs, corpus golden | ✅ Completada (2026-11-01) |
 | **1. Núcleo HTTP y normalización** | `Parametros`, CRS/bbox/datetime, Problem Details, `f`/`Accept`, CORS, cabeceras | ✅ Completada (2026-11-01) |
-| **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ⏳ Pendiente |
+| **2. Acciones y recursos** | `/api/actions/*`, catálogo, ETag | ✅ Completada (2026-11-01) |
 | **3. Visor y builder** | Plantillas, modelo de capas, `POST /api/v1/viewers` | ⏳ Pendiente |
 | **4. Proxy** | GET/POST, imágenes, allowlist SSRF, caché y rate limit | ⏳ Pendiente |
 | **5. Base de datos** | Datasources, introspección, OGC API Features, CQL2, MVT | ⏳ Pendiente |
@@ -38,6 +38,13 @@ Detalle de la fase 1:
 - [x] T-04 Negociación `f`/`Accept`, ETag/304, `Vary` y `Content-Crs`.
 - [x] T-05 CORS por allowlist, CSP con nonce, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
 - [x] T-06 Tests unitarios y de integración del núcleo (150 tests).
+
+Detalle de la fase 2:
+
+- [x] T-07 Fachada heredada `/api/actions/*` en JSON/JSONP validado, con `Deprecation` y `Sunset`.
+- [x] T-08 Catálogo real de controles, servicios, versiones, proyección, plugins y recursos en `apps/catalog/data/`.
+- [x] T-09 `resources/svg`, `resources/geodata` y `resourcesPlugins` con ETag/304, forma anidada heredada y forma plana canónica.
+- [x] T-10 Tests unitarios y de contrato OpenAPI (257 tests en total).
 
 ---
 
@@ -92,7 +99,7 @@ python scripts/capture_golden.py --base-url https://componentes.idee.es/api-idee
 
 ---
 
-## Endpoints disponibles (fase 1)
+## Endpoints disponibles (fases 1 y 2)
 
 | Método | Ruta | Descripción |
 |---|---|---|
@@ -102,6 +109,26 @@ python scripts/capture_golden.py --base-url https://componentes.idee.es/api-idee
 | GET | `/api/v1/conformance` | Clases de conformidad OGC |
 | GET | `/api/v1/openapi.json` | Contrato OpenAPI 3.1 |
 | GET | `/api/v1/docs` | Documentación interactiva |
+| GET | `/api/actions` | Índice heredado de acciones |
+| GET | `/api/actions/controls` | Controles disponibles |
+| GET | `/api/actions/services` | Tipos de capa disponibles |
+| GET | `/api/actions/projection` | Proyección por defecto (`EPSG:3857`) |
+| GET | `/api/actions/version` | Versión publicada de API-IDEE |
+| GET | `/api/actions/versions` | Ficheros JS/CSS por versión |
+| GET | `/api/actions/plugins` | Plugins internos |
+| GET | `/api/actions/plugins/external` | Plugins externos no obsoletos |
+| GET | `/api/actions/plugins/external/reload` | Recarga forzada de plugins externos |
+| GET | `/api/actions/resourcesPlugins` | Catálogo o fichero JS/CSS de un plugin |
+| GET | `/api/actions/resources/svg` | Colecciones SVG |
+| GET | `/api/actions/resources/geodata` | Colecciones de geodatos |
+| GET | `/api/v1/actions/*` | Equivalentes canónicos, solo JSON |
+| GET | `/api/v1/resources/svg` | Colecciones SVG (forma plana) |
+| GET | `/api/v1/resources/geodata` | Colecciones de geodatos (forma plana) |
+
+La fachada `/api/actions/*` reproduce el comportamiento del servidor Java: declara
+`application/javascript` aunque no haya `callback`, tolera parámetros desconocidos y
+`resourcesPlugins` responde JSON. La API `/api/v1` es estricta: rechaza `callback` y
+parámetros no admitidos, y negocia solo JSON.
 
 Todas las respuestas de error salen como `application/problem+json` (RFC 9457), con
 `invalid-params` cuando aplica y `X-Request-Id` para correlación.
@@ -130,6 +157,15 @@ GET /no-existe                -> 404 problem+json
 │   ├── urls.py               # salud + /api/v1 + handlers 4xx/5xx
 │   └── settings/             # base, dev, prod, test
 ├── apps/
+│   ├── actions/
+│   │   ├── service.py        # lógica compartida legacy/canónica
+│   │   ├── responses.py      # JSON, JSONP, ETag y assets
+│   │   ├── views.py          # fachada /api/actions/*
+│   │   └── api.py            # router Ninja /api/v1/actions/*
+│   ├── catalog/
+│   │   ├── loaders.py        # catálogo versionado y marcadores
+│   │   ├── external.py       # plugins externos (TTL + allowlist)
+│   │   └── data/             # JSON reales de API-IDEE 1.1.0
 │   └── core/
 │       ├── params.py         # Parametros: lectura única y tipada
 │       ├── validators.py     # int, bool, enum, listas, color, callback
@@ -144,7 +180,10 @@ GET /no-existe                -> 404 problem+json
 │       ├── views.py          # healthz/readyz
 │       └── api.py            # landing y conformance
 ├── tests/
-│   ├── unit/core/            # 150 tests del núcleo
+│   ├── unit/core/            # núcleo HTTP
+│   ├── unit/catalog/         # catálogo y plugins externos
+│   ├── unit/actions/         # servicio y fachada/canónica
+│   ├── contract/actions/     # contrato OpenAPI
 │   └── golden/               # corpus de URLs y capturas
 ├── docs/
 │   ├── PLAN_SERVIDOR_DJANGO.md
@@ -152,8 +191,8 @@ GET /no-existe                -> 404 problem+json
 └── scripts/capture_golden.py
 ```
 
-Las apps `viewers`, `actions`, `catalog`, `proxy`, `databases`, `mailer` y `legacy` se
-crearán en sus fases correspondientes.
+Las apps `viewers`, `proxy`, `databases`, `mailer` y `legacy` se crearán en sus fases
+correspondientes.
 
 ---
 
@@ -167,7 +206,16 @@ Todas las variables se leen de `.env` o del entorno. Ver `.env.example`.
 | `DJANGO_SECRET_KEY` | insegura en dev | Firma de sesiones |
 | `DJANGO_DEBUG` | `false` | Depuración |
 | `ALLOWED_HOSTS` | localhost | Hosts admitidos |
-| `API_IDEE_PUBLIC_URL` | `http://localhost:8000/` | Enlaces absolutos |
+| `API_IDEE_PUBLIC_URL` | `http://localhost:8000/` | Enlaces absolutos y catálogo |
+| `API_IDEE_STATIC_RESOURCES_URL` | `https://componentes.idee.es/estaticos` | Recursos SVG y geodatos |
+| `API_IDEE_EXTERNAL_PLUGINS_BASE_URL` | vacío (dev/test); real en prod | Catálogo remoto de plugins |
+| `API_IDEE_EXTERNAL_PLUGINS_TTL` | `300` | Vigencia de la caché de plugins |
+| `API_IDEE_EXTERNAL_PLUGINS_TIMEOUT` | `5` | Timeout de descarga |
+| `API_IDEE_EXTERNAL_PLUGINS_MAX_BYTES` | `2097152` | Tamaño máximo del catálogo |
+| `API_IDEE_EXTERNAL_PLUGINS_ALLOWED_HOSTS` | `*.idee.es,*.ign.es,*.cnig.es` | Allowlist de plugins |
+| `API_IDEE_CATALOG_MAX_AGE` | `300` | `Cache-Control` del catálogo |
+| `API_IDEE_RESOURCE_MAX_AGE` | `86400` | `Cache-Control` de SVG/geodatos |
+| `API_IDEE_PLUGIN_ASSET_MAX_AGE` | `3600` | `Cache-Control` de JS/CSS |
 | `CORS_ALLOWED_ORIGINS` | vacío | Orígenes permitidos |
 | `DATABASE_URL` | SQLite local | BD de la aplicación |
 | `PROXY_ALLOWED_HOSTS` | `*.idee.es,*.ign.es,*.cnig.es` | Allowlist SSRF (fase 4) |
@@ -194,12 +242,13 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visor, 
 
 ---
 
-## Próximos pasos (fase 2)
+## Próximos pasos (fase 3)
 
-- App `actions` con `/api/actions` y `/api/v1/actions/*` en JSON y JSONP validado.
-- Catálogo versionado de controles, plugins y servicios.
-- `resources/svg`, `resources/geodata` y `resourcesPlugins` con `ETag`.
-- Tests de contrato contra el OpenAPI generado.
+- Plantillas `index` y `visor` sin JSP.
+- Modelo de capas y parser del DSL `layers`.
+- Validación de controles/plugins contra el catálogo.
+- `POST /api/v1/viewers` + `GET /api/v1/viewers/{id}`.
+- Compatibilidad con `index.jsp`/`visor.jsp`.
 
 ---
 

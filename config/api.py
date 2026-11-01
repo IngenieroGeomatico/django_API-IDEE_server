@@ -9,6 +9,7 @@ from django.http import Http404, HttpRequest, HttpResponse
 from ninja import NinjaAPI
 from ninja.errors import ValidationError as NinjaValidationError
 
+from apps.actions.api import router as actions_router
 from apps.core.api import router as core_router
 from apps.core.problems import (
     InternalError,
@@ -34,6 +35,7 @@ api = NinjaAPI(
 )
 
 api.add_router("", core_router)
+api.add_router("", actions_router)
 
 
 @api.exception_handler(ProblemError)

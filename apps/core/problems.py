@@ -253,7 +253,12 @@ def problem_response(
 
 
 class ProblemDetailsMiddleware:
-    """Convierte cualquier excepción HTTP conocida en Problem Details."""
+    """Convierte cualquier excepción HTTP conocida en Problem Details.
+
+    Django ejecuta el manejo de excepciones de las vistas mediante
+    ``process_exception``; el ``try`` de ``__call__`` cubre, además, los fallos
+    de middlewares internos.
+    """
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -261,23 +266,31 @@ class ProblemDetailsMiddleware:
     def __call__(self, request: HttpRequest) -> HttpResponse:
         try:
             return self.get_response(request)
-        except ProblemError as exc:
+        except Exception as exc:
+            response = self._problem_for(request, exc)
+            if response is None:
+                raise
+            return response
+
+    def process_exception(self, request: HttpRequest, exception: Exception) -> HttpResponse | None:
+        """Captura las excepciones lanzadas por las vistas."""
+        return self._problem_for(request, exception)
+
+    def _problem_for(self, request: HttpRequest, exc: Exception) -> HttpResponse | None:
+        if isinstance(exc, ProblemError):
             return problem_response(exc, request=request)
-        except Http404 as exc:
+        if isinstance(exc, Http404):
             return problem_response(NotFound(str(exc) or "Recurso no encontrado."), request=request)
-        except PermissionDenied:
+        if isinstance(exc, PermissionDenied):
             return problem_response(
                 Forbidden("No tiene permisos para acceder a este recurso."), request=request
             )
-        except SuspiciousOperation as exc:
+        if isinstance(exc, SuspiciousOperation):
             return problem_response(BadRequest(str(exc)), request=request)
-        except Exception:
-            if getattr(settings, "DEBUG", False):
-                raise
-            logger.exception(
-                "Excepción no controlada",
-                extra={"method": request.method, "path": request.path},
-            )
-            return problem_response(
-                InternalError("Se ha producido un error interno."), request=request
-            )
+        if getattr(settings, "DEBUG", False):
+            return None
+        logger.exception(
+            "Excepción no controlada",
+            extra={"method": request.method, "path": request.path},
+        )
+        return problem_response(InternalError("Se ha producido un error interno."), request=request)

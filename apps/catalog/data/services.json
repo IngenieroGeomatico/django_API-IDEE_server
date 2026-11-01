@@ -1,0 +1,29 @@
+{
+  "version": "1.1.0",
+  "source": "api-idee-parent/src/main/filters/cnig-desarrollo.properties",
+  "services": [
+    "WMS",
+    "WMS_FULL",
+    "KML",
+    "LayerGroup",
+    "WFST",
+    "WMTS",
+    "GeoJSON",
+    "GeoTIFF",
+    "MBTilesVector",
+    "MBTiles",
+    "MapLibre",
+    "MVT",
+    "OGCAPIFeatures",
+    "OSM",
+    "TMS",
+    "XYZ",
+    "GenericRaster",
+    "GenericVector",
+    "Vector",
+    "Terrain",
+    "Tiles3D",
+    "GeoPackage",
+    "GeoPackageTile"
+  ]
+}

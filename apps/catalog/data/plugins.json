@@ -1,0 +1,604 @@
+{
+  "plugins": [
+    {
+      "name": "backimglayer",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/backimglayer/backimglayer-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/backimglayer/backimglayer-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/backimglayer/backimglayer-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/backimglayer/backimglayer-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/backimglayer/backimglayer.ol.min.js",
+          "css": "${api-idee.url}plugins/backimglayer/backimglayer.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "basic",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/basic/basic-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/basic/basic-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/basic/basic-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/basic/basic-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/basic/basic.ol.min.js",
+          "css": "${api-idee.url}plugins/basic/basic.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "comparators",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/comparators/comparators-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/comparators/comparators-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/comparators/comparators-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/comparators/comparators-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/comparators/comparators.ol.min.js",
+          "css": "${api-idee.url}plugins/comparators/comparators.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "contactlink",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/contactlink/contactlink-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/contactlink/contactlink-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/contactlink/contactlink-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/contactlink/contactlink-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/contactlink/contactlink.ol.min.js",
+          "css": "${api-idee.url}plugins/contactlink/contactlink.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "filteredsearch",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/filteredsearch/filteredsearch-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/filteredsearch/filteredsearch-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/filteredsearch/filteredsearch.ol.min.js",
+          "css": "${api-idee.url}plugins/filteredsearch/filteredsearch.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "help",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/help/help-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/help/help-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/help/help-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/help/help-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/help/help.ol.min.js",
+          "css": "${api-idee.url}plugins/help/help.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "incicarto",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/incicarto/incicarto-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/incicarto/incicarto-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/incicarto/incicarto-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/incicarto/incicarto-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/incicarto/incicarto.ol.min.js",
+          "css": "${api-idee.url}plugins/incicarto/incicarto.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "infocoordinates",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/infocoordinates/infocoordinates-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/infocoordinates/infocoordinates-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/infocoordinates/infocoordinates-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/infocoordinates/infocoordinates-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/infocoordinates/infocoordinates.ol.min.js",
+          "css": "${api-idee.url}plugins/infocoordinates/infocoordinates.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "information",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/information/information-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/information/information-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/information/information-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/information/information-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/information/information.ol.min.js",
+          "css": "${api-idee.url}plugins/information/information.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "layerswitcher",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/layerswitcher/layerswitcher-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/layerswitcher/layerswitcher-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/layerswitcher/layerswitcher-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/layerswitcher/layerswitcher-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/layerswitcher/layerswitcher.ol.min.js",
+          "css": "${api-idee.url}plugins/layerswitcher/layerswitcher.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "locator",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/locator/locator-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/locator/locator-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/locator/locator-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/locator/locator-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/locator/locator.ol.min.js",
+          "css": "${api-idee.url}plugins/locator/locator.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "locatorscn",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/locatorscn/locatorscn-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/locatorscn/locatorscn-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/locatorscn/locatorscn-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/locatorscn/locatorscn-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/locatorscn/locatorscn.ol.min.js",
+          "css": "${api-idee.url}plugins/locatorscn/locatorscn.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "magnify",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/magnify/magnify-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/magnify/magnify-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/magnify/magnify.ol.min.js",
+          "css": "${api-idee.url}plugins/magnify/magnify.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "mapheader",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/mapheader/mapheader-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/mapheader/mapheader-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/mapheader/mapheader.ol.min.js",
+          "css": "${api-idee.url}plugins/mapheader/mapheader.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "mapfooter",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/mapfooter/mapfooter-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/mapfooter/mapfooter-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/mapfooter/mapfooter.ol.min.js",
+          "css": "${api-idee.url}plugins/mapfooter/mapfooter.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "maxextzoom",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/maxextzoom/maxextzoom-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/maxextzoom/maxextzoom-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/maxextzoom/maxextzoom.ol.min.js",
+          "css": "${api-idee.url}plugins/maxextzoom/maxextzoom.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "measurebar",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/measurebar/measurebar-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/measurebar/measurebar-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/measurebar/measurebar-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/measurebar/measurebar-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/measurebar/measurebar.ol.min.js",
+          "css": "${api-idee.url}plugins/measurebar/measurebar.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/modal/modal-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/modal/modal-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/modal/modal-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/modal/modal-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/modal/modal.ol.min.js",
+          "css": "${api-idee.url}plugins/modal/modal.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "mousesrs",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/mousesrs/mousesrs-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/mousesrs/mousesrs-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/mousesrs/mousesrs-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/mousesrs/mousesrs-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/mousesrs/mousesrs.ol.min.js",
+          "css": "${api-idee.url}plugins/mousesrs/mousesrs.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "overviewmap",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/overviewmap/overviewmap-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/overviewmap/overviewmap-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/overviewmap/overviewmap-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/overviewmap/overviewmap-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/overviewmap/overviewmap.ol.min.js",
+          "css": "${api-idee.url}plugins/overviewmap/overviewmap.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "printviewmanagement",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/printviewmanagement/printviewmanagement-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/printviewmanagement/printviewmanagement-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/printviewmanagement/printviewmanagement-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/printviewmanagement/printviewmanagement-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/printviewmanagement/printviewmanagement.ol.min.js",
+          "css": "${api-idee.url}plugins/printviewmanagement/printviewmanagement.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "queryattributes",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/queryattributes/queryattributes-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/queryattributes/queryattributes-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/queryattributes/queryattributes-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/queryattributes/queryattributes-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/queryattributes/queryattributes.ol.min.js",
+          "css": "${api-idee.url}plugins/queryattributes/queryattributes.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "selectionzoom",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/selectionzoom/selectionzoom-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/selectionzoom/selectionzoom-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/selectionzoom/selectionzoom-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/selectionzoom/selectionzoom-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/selectionzoom/selectionzoom.ol.min.js",
+          "css": "${api-idee.url}plugins/selectionzoom/selectionzoom.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "sharemap",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/sharemap/sharemap-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/sharemap/sharemap-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/sharemap/sharemap-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/sharemap/sharemap-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/sharemap/sharemap.ol.min.js",
+          "css": "${api-idee.url}plugins/sharemap/sharemap.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "storymap",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/storymap/storymap-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/storymap/storymap-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/storymap/storymap-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/storymap/storymap-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/storymap/storymap.ol.min.js",
+          "css": "${api-idee.url}plugins/storymap/storymap.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "stylemanager",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/stylemanager/stylemanager-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/stylemanager/stylemanager-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/stylemanager/stylemanager-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/stylemanager/stylemanager-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/stylemanager/stylemanager.ol.min.js",
+          "css": "${api-idee.url}plugins/stylemanager/stylemanager.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "timeline",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/timeline/timeline-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/timeline/timeline-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/timeline/timeline-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/timeline/timeline-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/timeline/timeline.ol.min.js",
+          "css": "${api-idee.url}plugins/timeline/timeline.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "vectorsmanagement",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement.ol.min.js",
+          "css": "${api-idee.url}plugins/vectorsmanagement/vectorsmanagement.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "viewmanagement",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/viewmanagement/viewmanagement-1.0.1.ol.min.js",
+          "css": "${api-idee.url}plugins/viewmanagement/viewmanagement-1.0.1.ol.min.css"
+        },
+        {
+          "api-idee": "1.0.0",
+          "js": "${api-idee.url}plugins/viewmanagement/viewmanagement-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/viewmanagement/viewmanagement-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/viewmanagement/viewmanagement.ol.min.js",
+          "css": "${api-idee.url}plugins/viewmanagement/viewmanagement.ol.min.css"
+        }
+      ]
+    },
+    {
+      "name": "wfstcontrols",
+      "obsolete": "false",
+      "versions": [
+        {
+          "api-idee": "1.1.0",
+          "js": "${api-idee.url}plugins/wfstcontrols/wfstcontrols-1.0.0.ol.min.js",
+          "css": "${api-idee.url}plugins/wfstcontrols/wfstcontrols-1.0.0.ol.min.css"
+        },
+        {
+          "api-idee": "latest",
+          "js": "${api-idee.url}plugins/wfstcontrols/wfstcontrols.ol.min.js",
+          "css": "${api-idee.url}plugins/wfstcontrols/wfstcontrols.ol.min.css"
+        }
+      ]
+    }
+  ]
+}

@@ -24,5 +24,12 @@ CSRF_COOKIE_SAMESITE = "Lax"
 # Sin "*": la allowlist viene de CORS_ALLOWED_ORIGINS.
 CORS_ALLOW_ALL_ORIGINS = False
 
+# En producción sí se consulta el catálogo externo real; en dev/test se usa
+# únicamente el snapshot local.
+API_IDEE["EXTERNAL_PLUGINS_BASE_URL"] = env(
+    "API_IDEE_EXTERNAL_PLUGINS_BASE_URL",
+    default="https://componentes.idee.es/api-idee",
+)
+
 LOG_FORMAT = env("LOG_FORMAT", default="json")
 LOGGING["handlers"]["console"]["formatter"] = LOG_FORMAT
