@@ -1,0 +1,361 @@
+# Corpus de URLs del servidor heredado (T-00.1).
+#
+# Objetivo: congelar las URLs que hoy usa la galería y comparar el nuevo servidor
+# contra ellas (golden master, fase 7).
+#
+# Estado: SEMILLA. `captured_at` es null porque todavía no se ha ejecutado la
+# captura contra el servidor actual. Para completarla:
+#
+#   python scripts/capture_golden.py --base-url https://componentes.idee.es/api-idee
+#
+# El script guarda estado, cabeceras y cuerpo de cada URL en tests/golden/responses/.
+version: 1
+source:
+  server: "Desarrollos-IDEE/API-IDEE develop dd0759e (2026-10-26)"
+  base_url: "https://componentes.idee.es/api-idee"
+  client: "apiidee-1.1.0.ol.min.js"
+  captured_at: null
+  note: "Semilla basada en el plan y la wiki; pendiente de captura real."
+
+urls:
+  # ------------------------------------------------------------------
+  # Visor y builder
+  # ------------------------------------------------------------------
+  - id: viewer-basic
+    method: GET
+    path: "/?center=-3.7038,40.4168&zoom=5"
+    tags: [viewer]
+    expect: {status: 200, content_type: text/html}
+
+  - id: viewer-layers-wms
+    method: GET
+    path: "/?layers=WMS*Unidad%20administrativa*https%3A%2F%2Fwww.ign.es%2Fwms-inspire%2Funidades-administrativas*AU.AdministrativeUnit*true*false**true*true*true*1.3.0&center=-3.7,40.4&zoom=5"
+    tags: [viewer, layers]
+    expect: {status: 200, content_type: text/html}
+
+  - id: viewer-controls-plugins
+    method: GET
+    path: "/?controls=scale,scaleline&plugins=toc,measurebar&zoom=4"
+    tags: [viewer, controls]
+    expect: {status: 200, content_type: text/html}
+
+  - id: viewer-impl-cesium
+    method: GET
+    path: "/?implementation=cesium&center=-3.7,40.4&zoom=5"
+    tags: [viewer, cesium]
+    expect: {status: 200, content_type: text/html}
+
+  - id: viewer-wmc
+    method: GET
+    path: "/?wmcfile=https%3A%2F%2Fwww.ign.es%2Fwmc%2Fprueba.xml*Prueba"
+    tags: [viewer, wmc]
+    expect: {status: 200, content_type: text/html}
+
+  - id: viewer-projection-4326
+    method: GET
+    path: "/?projection=EPSG:4326&center=-3.7,40.4&zoom=5"
+    tags: [viewer, crs]
+    expect: {status: 200, content_type: text/html}
+
+  - id: builder-get-js
+    method: GET
+    path: "/api/js?center=-3.7,40.4&zoom=5"
+    tags: [viewer, builder]
+    expect: {status: 200, content_type: application/javascript}
+
+  # ------------------------------------------------------------------
+  # Acciones y recursos
+  # ------------------------------------------------------------------
+  - id: actions-index
+    method: GET
+    path: "/api/actions"
+    tags: [actions]
+    expect: {status: 200}
+
+  - id: actions-index-jsonp
+    method: GET
+    path: "/api/actions?callback=cb"
+    tags: [actions, jsonp]
+    expect: {status: 200, content_type: application/javascript}
+
+  - id: actions-controls
+    method: GET
+    path: "/api/actions/controls"
+    tags: [actions, controls]
+    expect: {status: 200}
+
+  - id: actions-services
+    method: GET
+    path: "/api/actions/services"
+    tags: [actions]
+    expect: {status: 200}
+
+  - id: actions-projection
+    method: GET
+    path: "/api/actions/projection"
+    tags: [actions, crs]
+    expect: {status: 200}
+
+  - id: actions-plugins
+    method: GET
+    path: "/api/actions/plugins"
+    tags: [actions, plugins]
+    expect: {status: 200}
+
+  - id: actions-plugins-external
+    method: GET
+    path: "/api/actions/plugins/external"
+    tags: [actions, plugins]
+    expect: {status: 200}
+
+  - id: actions-plugins-external-reload
+    method: GET
+    path: "/api/actions/plugins/external/reload"
+    tags: [actions, plugins]
+    expect: {status: 200}
+
+  - id: actions-version
+    method: GET
+    path: "/api/actions/version"
+    tags: [actions]
+    expect: {status: 200}
+
+  - id: actions-versions
+    method: GET
+    path: "/api/actions/versions"
+    tags: [actions]
+    expect: {status: 200}
+
+  - id: resources-svg
+    method: GET
+    path: "/api/actions/resources/svg"
+    tags: [actions, resources]
+    expect: {status: 200}
+
+  - id: resources-svg-named
+    method: GET
+    path: "/api/actions/resources/svg?name=ign"
+    tags: [actions, resources]
+    expect: {status: 200}
+
+  - id: resources-geodata
+    method: GET
+    path: "/api/actions/resources/geodata"
+    tags: [actions, resources]
+    expect: {status: 200}
+
+  - id: resources-plugins
+    method: GET
+    path: "/api/actions/resourcesPlugins?name=toc&version=1.1.0&type=ol"
+    tags: [actions, plugins]
+    expect: {status: 200}
+
+  # ------------------------------------------------------------------
+  # Proxy
+  # ------------------------------------------------------------------
+  - id: proxy-get-wmts-capabilities
+    method: GET
+    path: "/api/proxy?url=https%3A%2F%2Fwww.ign.es%2Fwmts%2Fign-base%3Frequest%3DGetCapabilities%26service%3DWMTS"
+    tags: [proxy]
+    expect: {status: 200}
+
+  - id: proxy-get-jsonp
+    method: GET
+    path: "/api/proxy?url=https%3A%2F%2Fwww.ign.es%2Fwmts%2Fign-base%3Frequest%3DGetCapabilities%26service%3DWMTS&callback=cb"
+    tags: [proxy, jsonp]
+    expect: {status: 200, content_type: application/javascript}
+
+  - id: proxy-image
+    method: GET
+    path: "/api/proxy/image?url=https%3A%2F%2Fwww.ign.es%2Fwms-inspire%2Fign-base%3Fservice%3DWMS%26request%3DGetMap%26layers%3DIGNBaseTodo%26format%3Dimage%2Fpng%26width%3D256%26height%3D256%26crs%3DEPSG%3A3857%26bbox%3D-450000%2C4900000%2C-350000%2C5000000"
+    tags: [proxy, image]
+    expect: {status: 200, content_type: image/png}
+
+  - id: proxypost-get
+    method: GET
+    path: "/proxyPost?url=https%3A%2F%2Fwww.ign.es%2Fwfs%3Fservice%3DWFS%26request%3DGetCapabilities"
+    tags: [proxy]
+    expect: {status: 200}
+
+  # ------------------------------------------------------------------
+  # Base de datos
+  # ------------------------------------------------------------------
+  - id: database-index
+    method: GET
+    path: "/api/database"
+    tags: [database]
+    expect: {status: 200}
+
+  - id: database-conformance
+    method: GET
+    path: "/api/database/conformance"
+    tags: [database]
+    expect: {status: 200}
+
+  - id: database-collections
+    method: GET
+    path: "/api/database/nomenclator/collections?limit=10&offset=0"
+    tags: [database]
+    expect: {status: 200}
+
+  - id: database-attributes
+    method: GET
+    path: "/api/database/nomenclator/attributes/municipios?limit=10"
+    tags: [database]
+    expect: {status: 200}
+
+  - id: database-items-wkt
+    method: GET
+    path: "/api/database/nomenclator/collections/municipios/items?limit=10&offset=0"
+    tags: [database, items]
+    expect: {status: 200}
+
+  - id: database-items-geojson
+    method: GET
+    path: "/api/database/nomenclator/collections/municipios/items?limit=10&formato=geojson"
+    tags: [database, items, geojson]
+    expect: {status: 200}
+
+  - id: database-items-bbox
+    method: GET
+    path: "/api/database/nomenclator/collections/municipios/items?bbox=-3.8,40.3,-3.6,40.5&bbox-crs=4326&limit=10"
+    tags: [database, items, bbox]
+    expect: {status: 200}
+
+  - id: database-items-mvt
+    method: GET
+    path: "/api/database/nomenclator/collections/municipios/items?formato=mvt&limit=1000"
+    tags: [database, items, mvt]
+    expect: {status: 200}
+
+  - id: database-items-where
+    method: GET
+    path: "/api/database/nomenclator/collections/municipios/items?where=nombre%20like%20%27*al*%27&limit=50&formato=geojson"
+    tags: [database, sql-legacy]
+    expect: {status: 200}
+
+  - id: database-sql
+    method: GET
+    path: "/api/database/nomenclator/municipios/sql?select=id,nombre&limit=10"
+    tags: [database, sql-legacy]
+    expect: {status: 200}
+
+  - id: database-native-query
+    method: GET
+    path: "/api/database/nomenclator?query=SELECT%201"
+    tags: [database, sql-legacy]
+    expect: {status: 200}
+
+  - id: database-layerfilter
+    method: GET
+    path: "/api/database/nomenclator/layerfilter?layer=municipios&where=nombre%20like%20%27*al*%27&formato=geojson"
+    tags: [database, sql-legacy]
+    expect: {status: 200}
+
+  - id: database-domain
+    method: GET
+    path: "/api/database/nomenclator/municipios/domain/provincia"
+    tags: [database, domain]
+    expect: {status: 200}
+
+  # ------------------------------------------------------------------
+  # Correo
+  # ------------------------------------------------------------------
+  - id: email-send
+    method: POST
+    path: "/api/email"
+    tags: [email]
+    body:
+      content_type: multipart/form-data
+      fields: {subject: "Prueba", mailto: "pruebas@example.com", body: "{\"text\":\"hola\"}"}
+    expect: {status: 200}
+
+  # ------------------------------------------------------------------
+  # Estáticos
+  # ------------------------------------------------------------------
+  - id: static-assets-theme
+    method: GET
+    path: "/assets/ign/theme.css"
+    tags: [static]
+    expect: {status: 200, content_type: text/css}
+
+  - id: static-js-ol
+    method: GET
+    path: "/js/apiidee.ol.min.js"
+    tags: [static, client]
+    expect: {status: 200, content_type: application/javascript}
+
+  - id: static-js-cesium
+    method: GET
+    path: "/js/apiidee.cesium.min.js"
+    tags: [static, client]
+    expect: {status: 200, content_type: application/javascript}
+
+  - id: static-configuration
+    method: GET
+    path: "/js/configuration.js"
+    tags: [static, client]
+    expect: {status: 200, content_type: application/javascript}
+
+  - id: static-plugins-json
+    method: GET
+    path: "/data/plugins.json"
+    tags: [static, plugins]
+    expect: {status: 200, content_type: application/json}
+
+  - id: static-wasm-sqljs
+    method: GET
+    path: "/wasm/sql-wasm.wasm"
+    tags: [static, wasm]
+    expect: {status: 200, content_type: application/wasm}
+
+  # ------------------------------------------------------------------
+  # JSP heredados (se congelan o redirigen en fase 6)
+  # ------------------------------------------------------------------
+  - id: legacy-visor-jsp
+    method: GET
+    path: "/visor.jsp?center=-3.7,40.4&zoom=5"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-toc-jsp
+    method: GET
+    path: "/toc.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-printermap-jsp
+    method: GET
+    path: "/printermap.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-getfeatureinfo-jsp
+    method: GET
+    path: "/getfeatureinfo.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-styles-jsp
+    method: GET
+    path: "/styles.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-search-jsp
+    method: GET
+    path: "/search.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-measurebar-jsp
+    method: GET
+    path: "/measurebar.jsp"
+    tags: [legacy]
+    expect: {status: 200}
+
+  - id: legacy-layermanager-jsp
+    method: GET
+    path: "/layermanager.jsp"
+    tags: [legacy]
+    expect: {status: 200}

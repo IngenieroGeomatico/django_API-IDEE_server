@@ -1,0 +1,9 @@
+Django==6.1.2
+asgiref==3.13.0
+django-cors-headers==4.9.0
+django-environ==0.14.0
+django-ninja==1.7.3
+httpx==0.28.1
+pyproj==3.8.0
+sqlparse==0.6.0
+tzdata==2026.6

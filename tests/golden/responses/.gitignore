@@ -1,0 +1,6 @@
+# Respuestas capturadas del servidor heredado.
+#
+# Generadas por `python scripts/capture_golden.py --base-url ...`.
+# No se versionan los cuerpos: pueden contener datos de servicios de terceros.
+*
+!.gitignore
