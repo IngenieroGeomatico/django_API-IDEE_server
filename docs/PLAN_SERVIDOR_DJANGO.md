@@ -1129,6 +1129,8 @@ Las tareas usan IDs `T-xx`. La estimación es en jornadas de una persona. Las de
 | T-15 | Escape seguro y CSP | `json_script`, nonce | Sin XSS en parámetros | 1 |
 | T-16 | Compatibilidad `index.jsp`/`visor.jsp` | Redirecciones/alias | URLs antiguas funcionan | 2 |
 
+> **Estado:** Fase 3 implementada (plantillas, modelo de capas, builder, validación y endpoints de visualizadores).
+
 #### Fase 4 — Proxy (12 d)
 
 | ID | Tarea | Entregable | Criterio de aceptación | D |

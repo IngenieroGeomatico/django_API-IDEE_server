@@ -242,13 +242,14 @@ valor ≤ 2 KB, `limit` 1–10 000, `offset` ≤ 1 000 000, 50 capas por visor, 
 
 ---
 
-## Próximos pasos (fase 3)
+## Fase 3 (completada)
 
-- Plantillas `index` y `visor` sin JSP.
-- Modelo de capas y parser del DSL `layers`.
-- Validación de controles/plugins contra el catálogo.
-- `POST /api/v1/viewers` + `GET /api/v1/viewers/{id}`.
-- Compatibilidad con `index.jsp`/`visor.jsp`.
+- Plantillas `viewer.html` (`index.jsp`) y `visualizador.html` (`visor.jsp`) sin JSP.
+- Modelo de capas y parser del DSL `layers` (`apps/viewers/layers.py`).
+- Validación de controles y plugins contra el catálogo (`apps/viewers/validate.py`).
+- `POST /api/v1/viewers` y `GET /api/v1/viewers/{id}` (HTML o JSON según `f`).
+- Builder `GET/POST /api/js` con escapado seguro y `IDEE.map({...})`.
+- Compatibilidad con `index.jsp`, `visor.jsp`, `/visor` y `/visualizador`.
 
 ---
 

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="idee" content="yes">
+    <title>API-IDEE</title>
+    <link type="text/css" rel="stylesheet" href="/assets/css/apiidee.{{ implementation }}.min.css">
+    {% for href in plugin_css %}
+    <link type="text/css" rel="stylesheet" href="{{ href }}">
+    {% endfor %}
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" class="m-container"></div>
+    <noscript>Este visualizador necesita JavaScript para mostrar el mapa.</noscript>
+    <script type="text/javascript" src="/vendor/browser-polyfill.js"></script>
+    <script type="text/javascript" src="/js/apiidee.{{ implementation }}.min.js"></script>
+    <script type="text/javascript" src="/js/configuration.js"></script>
+    {% for src in plugin_js %}
+    <script type="text/javascript" src="{{ src }}"></script>
+    {% endfor %}
+    <script type="text/javascript" src="/api/js?{{ js_query }}"></script>
+</body>
+</html>

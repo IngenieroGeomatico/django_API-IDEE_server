@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="idee" content="yes">
+    <title>Visualizador API-IDEE</title>
+    <link type="text/css" rel="stylesheet" href="/assets/css/apiidee.ol.min.css">
+    {% for href in plugin_css %}
+    <link type="text/css" rel="stylesheet" href="{{ href }}">
+    {% endfor %}
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="mapjs" class="m-container"></div>
+    <noscript>Este visualizador necesita JavaScript para mostrar el mapa.</noscript>
+    <script type="text/javascript" src="/vendor/browser-polyfill.js"></script>
+    <script type="text/javascript" src="/js/apiidee.ol.min.js"></script>
+    <script type="text/javascript" src="/js/configuration.js"></script>
+    {% for src in plugin_js %}
+    <script type="text/javascript" src="{{ src }}"></script>
+    {% endfor %}
+    {{ config|json_script:"viewer-config" }}
+    <script nonce="{{ request.csp_nonce }}">
+        (function () {
+            if (typeof IDEE === "undefined") {
+                return;
+            }
+            var data = JSON.parse(document.getElementById("viewer-config").textContent);
+            if (data.configuration && IDEE.config) {
+                Object.keys(data.configuration).forEach(function (path) {
+                    var parts = path.split(".");
+                    var target = IDEE.config;
+                    for (var i = 0; i < parts.length - 1; i += 1) {
+                        target[parts[i]] = target[parts[i]] || {};
+                        target = target[parts[i]];
+                    }
+                    target[parts[parts.length - 1]] = data.configuration[path];
+                });
+            }
+            var map = IDEE.map(data.map);
+            (data.plugins || []).forEach(function (item) {
+                var plugin = new IDEE.plugin[item.class](...item.args);
+                map.addPlugin(plugin);
+            });
+        }());
+    </script>
+</body>
+</html>

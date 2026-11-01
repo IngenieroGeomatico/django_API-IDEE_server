@@ -8,6 +8,7 @@ from django.urls import path
 from apps.actions import views as actions_views
 from apps.core import views as core_views
 from apps.core.problems import InternalError, NotFound, problem_response
+from apps.viewers import views as viewers_views
 from config.api import api
 
 urlpatterns = [
@@ -51,6 +52,15 @@ urlpatterns = [
         name="legacy-resources-geodata",
     ),
     path("api/actions/resources/geodata/", actions_views.resources_geodata),
+    # Visualizadores: rutas nuevas y alias heredados de ``index.jsp``/``visor.jsp``.
+    path("", viewers_views.index, name="viewer-index"),
+    path("index.jsp", viewers_views.index, name="legacy-index-jsp"),
+    path("visualizador", viewers_views.visualizador, name="visualizador"),
+    path("visualizador/", viewers_views.visualizador),
+    path("visor", viewers_views.visualizador, name="visor"),
+    path("visor.jsp", viewers_views.visualizador, name="legacy-visor-jsp"),
+    path("api/js", viewers_views.api_js, name="legacy-api-js"),
+    path("api/js/", viewers_views.api_js),
 ]
 
 

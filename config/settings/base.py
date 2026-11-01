@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.catalog",
     "apps.actions",
+    "apps.viewers",
 ]
 
 MIDDLEWARE = [
